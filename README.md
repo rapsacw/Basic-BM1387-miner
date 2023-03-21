@@ -49,4 +49,4 @@ Fill in your data:<br>
    "bestever": 319822
   }
 </code><br>
-Running 2 workers (Pharaonis, 2 asic version) for a few hourse at 29 & 39GH/s.
+Running 2 workers (Pharaonis, 2 asic version) for a few hours at 29 & 39GH/s.
