@@ -20,5 +20,5 @@ Fill in your data:<br>
 #define poolworker "" // change to "YOURWORKERNAME" if you want to see statistics per worker on solo.ckpool.org
 </code><br>
 <h2>'Features'</h2><br>
-- The first submitted shares can be invalid as the suggested difficulty is applied immidiately instead of starting at the next work.<br>
+- The first submitted shares can be invalid as the suggested difficulty is applied immediately instead of starting at the next work.<br>
 - The program does not check if the pool is still alive or not, and will not auto reconnect.<br>
