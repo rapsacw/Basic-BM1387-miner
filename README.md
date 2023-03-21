@@ -2,7 +2,7 @@
 Basic miner for my standalone asic miner(s)<br>
 <br>
 <h2>What is it</h2><br>
-- An arduino sketch that together with suitable hardware will solo mine bitcoin on solo.skpool.org<br>
+- An arduino sketch that together with suitable hardware will solo mine bitcoin on solo.ckpool.org<br>
 - very much alpha but working<br>
 <br>
 <h2>Dependencies</h2><br>
