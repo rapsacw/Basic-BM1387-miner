@@ -4,6 +4,7 @@ Basic miner for my standalone asic miner(s).<br>
 <h2>What is it</h2><br>
 - An arduino sketch that together with suitable hardware will solo mine bitcoin on solo.ckpool.org<br>
 - very much alpha but working.<br>
+- 'Easily' adapted for other hardware, newer versions will be more hardware dependent and use more libraries.<br>
 <br>
 <h2>Dependencies</h2><br>
 - Freenove_WS2812_Lib_for_ESP32 for led<br>
