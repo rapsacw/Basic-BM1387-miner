@@ -7,13 +7,15 @@ Flash size: 4MB
 Partition scheme: Default 4MB with spiffs
 Erase Flash Before Sketch Upload: enabled
 JTAG: ESP Usb bridge
+Note: the esp32c3 is big endian, running this unmodified on a little endian system will not work, change the endianess
+of the midstate send to the asics.
 *****************************************************************************************************************************/
 
 #define ap_ssid "YOUR_SSID"
 #define ap_password "YOUR_WIRELESS_PW"
 #define POOL_URL "solo.ckpool.org" // most other pools don't work (yet)
 #define POOL_PORT 3333
-#define miningaddr "YOU_BITCOIN_ADDR"
+#define miningaddr "YOUR_BITCOIN_ADDR"
 #define miningpw ""
 #define poolworker "" // change to "YOURWORKERNAME" if you want to see statistics per worker on solo.ckpool.org
 
@@ -359,7 +361,7 @@ uint8_t s_endian;
 #define pin_ws 4
 #define pin_led 6
 //Vcore
-#define pin_pg 9 // power good signal from buck converter
+#define pin_pg 9 // power good signal from buck converter, BAD choice of pin! pg=0 will stop the esp entering run mode..
 // adc
 #define pin_vcore 1
 #define pin_temp 3
@@ -906,7 +908,7 @@ void AddJob(unsigned int count)
     memcpy(&j->Work[8],&j->Header[72],4); // copy nbits
     memcpy(&j->Work[12],&j->Header[68],4); // copy ntime
     memcpy(&j->Work[16], &j->Header[64],4); // copy last 4 bytes of merkle
-    memcpy_reverse(&j->Work[20],j->Midstate,32); // copy reversed midstate
+    memcpy_reverse(&j->Work[20],j->Midstate,32); // copy reversed midstate, change this for little endian systems
 
     crctje = crc16_false(j->Work,52);
     j->Work[52] = crctje>>8;
