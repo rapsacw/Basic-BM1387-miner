@@ -671,30 +671,15 @@ static const double bits192 = 62771017353866807638357894232076664161023554444640
 static const double bits128 = 340282366920938463463374607431768211456.0;
 static const double bits64 = 18446744073709551616.0;
 
-double le64tobin(uint64_t p_data)
+uint64_t array2ui64(uint8_t *p)
 {
+  int i;
   uint64_t res;
-  uint64_t psrc;
-  uint8_t *p_res,*p_src;
-  int i;
-  psrc = p_data;
-  p_res = (uint8_t *)&res;
-  p_src = (uint8_t *)&p_data;
-  for(i=0;i<8;i++)
-  {
-    p_res[i] = p_src[7-i];
-  }
-  return (double)res;
-}
 
-uint64_t cnvrt2ui64(uint8_t *p)
-{
-  int i;
-  uint64_t res = 0;
-  
+  res = 0;
   for(i=0;i<8;i++)
   {
-    res <<= 8;
+    res *= 256;
     res |= p[i];
   }
   return res;
@@ -705,31 +690,36 @@ double le256todouble(uint8_t *target)
   uint64_t data64;
   double dcut64;
 
-  data64 = cnvrt2ui64(target + 24);
-  dcut64 = le64tobin(data64) * bits192;
+  data64 = array2ui64(&target[0]);
+  dcut64 = (double)data64 * bits192; //le64tobin(data64) * bits192;
 
-  data64 = cnvrt2ui64(target + 16);
-  dcut64 += le64tobin(data64) * bits128;
+  data64 = array2ui64(&target[8]);
+  dcut64 += (double)data64 * bits128; //le64tobin(data64) * bits128;
 
-  data64 = cnvrt2ui64(target + 8);
-  dcut64 += le64tobin(data64) * bits64;
+  data64 = array2ui64(&target[16]);
+  dcut64 += (double)data64 * bits64; //le64tobin(data64) * bits64;
 
-  data64 = cnvrt2ui64(target);
-  dcut64 += le64tobin(data64);
+  data64 = array2ui64(&target[24]);
+  dcut64 += (double)data64; //le64tobin(data64);
 
   return dcut64;
 }
 
-// Return a difficulty from a binary target, does not work (compiler can't do int64 asrithmetic or long double initializers??)
-double diff_from_target(uint8_t *target)
+
+// Return a difficulty from a hash
+int diff_from_target(uint8_t *target)
 {
-  double d64, dcut64;
+  double dft,d64, dcut64;
+  char b[80];
 
   d64 = truediffone;
   dcut64 = le256todouble(target);
   if (dcut64<1)
-    return (double)1;
-  return d64 / dcut64;
+    dft = 1;
+  else
+    dft = (double)(d64 / dcut64);
+  int idft = (int)(dft+0.001); // round
+  return idft;
 }
 
 /*
