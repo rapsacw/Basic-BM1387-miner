@@ -1,5 +1,6 @@
 # Basic-BM1387-miner
 Basic miner for my standalone asic miner(s).<br>
+Updated soon, see screenshot of new version<br>
 <br>
 <h2>What is it</h2><br>
 - An arduino sketch that together with suitable hardware will solo mine bitcoin on solo.ckpool.org<br>
